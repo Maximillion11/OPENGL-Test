@@ -3,6 +3,8 @@
 
 #include <glad/glad.h>
 
+#include <glm/glm.hpp>
+
 #include "Utils.h"
 
 #include <string>
@@ -16,7 +18,7 @@ public:
     unsigned int ID;
     // constructor generates the shader on the fly
     // ------------------------------------------------------------------------
-    Shader(const char* vertexPath, const char* fragmentPath)
+    void AssignShader(const char* vertexPath, const char* fragmentPath)
     {
         // 1. retrieve the vertex/fragment source code from filePath
         std::string vertexCode;

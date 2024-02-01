@@ -6,6 +6,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include "Shaders.h"
 #include "Shader.h"
 
 #include "Utils.h"
@@ -61,7 +62,7 @@ int main()
     }
 
     // build and compile our shader program
-    Shader ourShader("Shader.vs", "Shader.fs");
+    Shaders::AssignShaders();
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     //float vertices[] = {
@@ -206,14 +207,14 @@ int main()
     stbi_image_free(data);
 
     // tell opengl for each sampler to which texture unit it belongs to (only has to be done once)
-    ourShader.use();
-    ourShader.setInt("texture1", 0);
-    ourShader.setInt("texture2", 1);
+    Shaders::MainShader.use();
+    Shaders::MainShader.setInt("texture1", 0);
+    Shaders::MainShader.setInt("texture2", 1);
 
     // model matrix
     glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
     model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-    ourShader.setMat4("transform", model);
+    Shaders::MainShader.setMat4("transform", model);
 
     // Orthographic camera
     //glm::mat4 projection = glm::ortho(0.0f, 800.0f, 0.0f, 600.0f, 0.1f, 100.0f);
@@ -239,15 +240,15 @@ int main()
         glBindTexture(GL_TEXTURE_2D, texture2);
 
         // Define what shader to use
-        ourShader.use();
+        Shaders::MainShader.use();
 
         // Perspective projection matrix
         glm::mat4 projection = camera.GetProjection();
-        ourShader.setMat4("projection", projection);
+        Shaders::MainShader.setMat4("projection", projection);
 
         // create view matrix
         glm::mat4 view = camera.GetViewMatrix();
-        ourShader.setMat4("view", view);
+        Shaders::MainShader.setMat4("view", view);
 
         // with the uniform matrix set, draw the model
         glBindVertexArray(VAO);
@@ -258,7 +259,7 @@ int main()
 
             float angle = 20.0f * i;
             model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
-            ourShader.setMat4("model", model);
+            Shaders::MainShader.setMat4("model", model);
 
             glDrawArrays(GL_TRIANGLES, 0, 36);
         }
