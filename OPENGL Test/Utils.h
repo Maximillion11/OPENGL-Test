@@ -3,10 +3,11 @@
 
 namespace Utils
 {
-	extern int SCR_WIDTH;
-	extern int SCR_HEIGHT;
+	extern unsigned int WINDOW_WIDTH;
+	extern unsigned int WINDOW_HEIGHT;
 
 	extern float deltaTime;
+	extern float lastFrameTime;
 }
 
 #endif

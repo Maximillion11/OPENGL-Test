@@ -143,16 +143,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GL.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="Input.cpp" />
+    <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Shaders.cpp" />
-    <ClCompile Include="Source.cpp" />
+    <ClCompile Include="Engine.cpp" />
     <ClCompile Include="stbimageload.cpp" />
     <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="GL.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="Primitives.h" />
+    <ClInclude Include="Renderer.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Shaders.h" />
     <ClInclude Include="stb_image.h" />

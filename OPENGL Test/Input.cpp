@@ -1,32 +1,36 @@
 #include "Input.h"
 
-#include "Utils.h"
-
-#include <map>
-
 namespace Input
 {
 	std::map<int, int> keysPressed;
 
 	bool firstMouse = true;
 
-	float lastMouseX = Utils::SCR_WIDTH / 2;
-	float lastMouseY = Utils::SCR_HEIGHT / 2;
+	float lastMouseX = Utils::WINDOW_WIDTH / 2;
+	float lastMouseY = Utils::WINDOW_HEIGHT / 2;
+
+	bool shiftHeld = false;
 
 	void Input::GetKey(int key, int scancode, int action, int mods)
 	{
 		if (action == GLFW_PRESS)
 		{
-			keysPressed[key] = scancode;
+			if (key == GLFW_KEY_LEFT_SHIFT)
+				shiftHeld = true;
+			else
+				keysPressed[key] = scancode;
 		}
 
 		if (action == GLFW_RELEASE)
 		{
-			keysPressed.erase(key);
+			if (key == GLFW_KEY_LEFT_SHIFT)
+				shiftHeld = false;
+			else
+				keysPressed.erase(key);
 		}
 	}
 
-	void Input::GetMouse(Camera* camera, double xposIn, double yposIn)
+	void Input::GetMouse(double xposIn, double yposIn)
 	{
 		float xpos = static_cast<float>(xposIn);
 		float ypos = static_cast<float>(yposIn);
@@ -44,41 +48,47 @@ namespace Input
 		lastMouseX = xpos;
 		lastMouseY = ypos;
 
-		camera->ProcessMouseMovement(xOffset, yOffset);
+		GL::camera.ProcessMouseMovement(xOffset, yOffset);
 	}
 
-	void Input::GetScrollWheel(Camera* camera, double xOffsetIn, double yOffsetIn)
+	void Input::GetScrollWheel(double xOffsetIn, double yOffsetIn)
 	{
 		float xOffset = static_cast<float>(xOffsetIn);
 		float yOffset = static_cast<float>(yOffsetIn);
 
-		camera->ProcessMouseScroll(yOffset);
+		GL::camera.ProcessMouseScroll(yOffset);
 	}
 
-	void Input::CheckKeys(GLFWwindow* window, Camera* camera) {
+	void Input::CheckKeys() {
 		if (KeyPressed(GLFW_KEY_W)) {
-			camera->ProcessKeyboard(FORWARD);
+			GL::camera.ProcessKeyboard(FORWARD, shiftHeld);
 		}
 		if (KeyPressed(GLFW_KEY_A)) {
-			camera->ProcessKeyboard(LEFT);
+			GL::camera.ProcessKeyboard(LEFT, shiftHeld);
 		}
 		if (KeyPressed(GLFW_KEY_S)) {
-			camera->ProcessKeyboard(BACKWARD);
+			GL::camera.ProcessKeyboard(BACKWARD, shiftHeld);
 		}
 		if (KeyPressed(GLFW_KEY_D)) {
-			camera->ProcessKeyboard(RIGHT);
+			GL::camera.ProcessKeyboard(RIGHT, shiftHeld);
+		}
+		if (KeyPressed(GLFW_KEY_SPACE)) {
+			GL::camera.ProcessKeyboard(UP, shiftHeld);
+		}
+		if (KeyPressed(GLFW_KEY_LEFT_CONTROL)) {
+			GL::camera.ProcessKeyboard(DOWN, shiftHeld);
 		}
 
 		if (KeyPressed(GLFW_KEY_ESCAPE)) {
-			glfwSetWindowShouldClose(window, true);
+			glfwSetWindowShouldClose(GL::window, true);
 		}
 	}
 
 	bool Input::KeyPressed(int key)
 	{
-		if (keysPressed.count(key) > 0) {
+		if (keysPressed.count(key) > 0)
 			return true;
-		}
+
 		return false;
 	}
 }
