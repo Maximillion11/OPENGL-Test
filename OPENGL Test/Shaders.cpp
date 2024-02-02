@@ -5,7 +5,7 @@ namespace Shaders {
 	Shader OtherShader;
 
 	void AssignShaders() {
-		MainShader.AssignShader("Shader.vs", "Shader.fs");
-		OtherShader.AssignShader("Shader.vs", "Shader.fs");
+		MainShader.AssignShader("Shaders/Shader.vs", "Shaders/Shader.fs");
+		OtherShader.AssignShader("Shaders/Shader.vs", "Shaders/Shader.fs");
 	}
 }

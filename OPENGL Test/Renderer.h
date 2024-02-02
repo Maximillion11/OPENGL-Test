@@ -9,6 +9,8 @@ namespace Renderer
 	extern void Init();
 	
 	extern void Deallocate();
+
+	extern unsigned int CreateTexture(const char* fileLocation);
 }
 
 #endif

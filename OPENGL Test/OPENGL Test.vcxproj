@@ -164,12 +164,12 @@
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Shader.fs" />
-    <None Include="Shader.vs" />
-  </ItemGroup>
-  <ItemGroup>
     <Image Include="awesomeface.png" />
     <Image Include="container.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\Shader.fs" />
+    <None Include="Shaders\Shader.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

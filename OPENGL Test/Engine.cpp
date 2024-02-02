@@ -48,7 +48,7 @@ int main()
         float currentFrame = glfwGetTime();
         Utils::deltaTime = currentFrame - Utils::lastFrameTime;
         Utils::lastFrameTime = currentFrame;
-
+        
         Input::CheckKeys();
 
         // render
