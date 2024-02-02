@@ -86,10 +86,28 @@ namespace Renderer
         unsigned char* data = stbi_load(fileLocation, &width, &height, &nrChannels, 0);
         if (data)
         {
+            // Turn char* fileLocation to string
             std::string fileLocationString(fileLocation);
+            // Create string to store filetype
+            std::string fileType;
 
-            //Add alpha channel if PNG file
-            if (fileLocationString.find(".png") != std::string::npos || fileLocationString.find(".PNG") != std::string::npos)
+            // Loop through string
+            bool writeToString = false;
+            for (char& currentCharacter : fileLocationString)
+            {
+                if (writeToString)
+                {
+                    // Append string with currentCharacter
+                    fileType += tolower(currentCharacter);
+                // When currentCharacter == '.', set writeToString TRUE as the next characters will be the file type
+                } else if (currentCharacter == '.')
+                {
+                    writeToString = true;
+                }
+            }
+
+            // Add alpha channel if PNG file
+            if (fileType == "png")
                 glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
             else
                 glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
