@@ -1,5 +1,7 @@
 #include "GL.h"
 
+#include "Utils.h"
+
 namespace GL
 {
     Camera camera(glm::vec3(0.0f));

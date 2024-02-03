@@ -1,5 +1,10 @@
 #include "Input.h"
 
+#include "Utils.h"
+#include "GL.h"
+
+#include <map>
+
 namespace Input
 {
 	std::map<int, int> keysPressed;

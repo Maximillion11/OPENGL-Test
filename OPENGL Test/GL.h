@@ -4,10 +4,8 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include "Utils.h"
 #include "Input.h"
-
-#include <iostream>
+#include "Camera.h"
 
 namespace GL
 {
