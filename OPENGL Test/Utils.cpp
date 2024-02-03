@@ -1,5 +1,7 @@
 #include "Utils.h"
 
+#include "Camera.h"
+
 namespace Utils
 {
 	unsigned int WINDOW_WIDTH = 1000;

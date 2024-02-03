@@ -1,6 +1,9 @@
+#include <glad/glad.h>
+
 #include "GL.h"
 
 #include "Utils.h"
+#include "Input.h"
 
 namespace GL
 {

@@ -1,10 +1,8 @@
 #ifndef GL_H
 #define GL_H
 
-#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include "Input.h"
 #include "Camera.h"
 
 namespace GL
