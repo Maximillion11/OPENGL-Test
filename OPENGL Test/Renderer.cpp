@@ -47,10 +47,10 @@ namespace Renderer
             glBindVertexArray(VAOgettingstarted);
 
             // position attribute
-            glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+            glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
             glEnableVertexAttribArray(0);
             // texture coord attribute
-            glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+            glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
             glEnableVertexAttribArray(1);
 
             texture1gettingstarted = CreateTexture("container.jpg");
@@ -74,8 +74,14 @@ namespace Renderer
             glBindVertexArray(cubeVAOlighting);
 
             // position attribute
-            glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+            glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
             glEnableVertexAttribArray(0);
+            // texture coord attribute (not used but assign anyway to help this make sense of how the primitives values are added to the shader)
+            glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+            glEnableVertexAttribArray(1);
+            // normals attribute
+            glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(5 * sizeof(float)));
+            glEnableVertexAttribArray(2);
             // -----
 
             // -----CUBE LIGHT SOURCE
@@ -87,14 +93,9 @@ namespace Renderer
             glBindBuffer(GL_ARRAY_BUFFER, VBOlighting);
 
             // position attribute
-            glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+            glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
             glEnableVertexAttribArray(0);
             // -----
-
-            // Asign object colour and light colour
-            Shaders::OpenGLLightingCubeShader.use();
-            Shaders::OpenGLLightingCubeShader.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
-            Shaders::OpenGLLightingCubeShader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
         }
 	}
 

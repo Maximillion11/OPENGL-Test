@@ -86,6 +86,7 @@ int main()
         else if (activeScene == LearnOpenGLLighting) {
             // define light position vector
             glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
+
             // Define active shader as the light source shader
             Shaders::OpenGLLightingLightShader.use();
             // Perspective projection matrix
@@ -103,6 +104,13 @@ int main()
             // Bind VAO and render
             glBindVertexArray(Renderer::lightVAOlighting);
             glDrawArrays(GL_TRIANGLES, 0, 36);
+
+            // Assign values to Cubes shader
+            Shaders::OpenGLLightingCubeShader.use();
+            Shaders::OpenGLLightingCubeShader.setVec3("viewPos", GL::camera.Position);
+            Shaders::OpenGLLightingCubeShader.setVec3("lightPos", lightPos);
+            Shaders::OpenGLLightingCubeShader.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
+            Shaders::OpenGLLightingCubeShader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
 
             // Define active shader as the cube shader
             Shaders::OpenGLLightingCubeShader.use();
