@@ -13,10 +13,15 @@
 
 namespace Renderer
 {
-    unsigned int VBO, VAO, EBO;
-    unsigned int texture1, texture2;
+    // Scene 0 = LearnOpenGLGettingStarted
+    unsigned int VBOgettingstarted, VAOgettingstarted;
+    unsigned int texture1gettingstarted, texture2gettingstarted;
 
-	void Renderer::Init() {
+    // Scene 1 = LearnOpenGLLighting
+    unsigned int VBOlighting, cubeVAOlighting;
+    unsigned int lightVAOlighting;
+
+	void Renderer::Init(unsigned int sceneID) {
         // glad: load all OpenGL function pointers
         if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
         {
@@ -25,45 +30,89 @@ namespace Renderer
         }
 
         // build and compile our shader program
-        Shaders::AssignShaders();
+        Shaders::AssignShaders(sceneID);
 
-        //Enable zBuffer
+        // Configure global opengl state
         glEnable(GL_DEPTH_TEST);
 
-        glGenVertexArrays(1, &VAO);
-        glGenBuffers(1, &VBO);
-        glGenBuffers(1, &EBO);
+        // Scene 0 = LearnOpenGLGettingStarted
+        if (sceneID == 0)
+        {
+            glGenVertexArrays(1, &VAOgettingstarted);
+            glGenBuffers(1, &VBOgettingstarted);
 
-        glBindVertexArray(VAO);
+            glBindBuffer(GL_ARRAY_BUFFER, VBOgettingstarted);
+            glBufferData(GL_ARRAY_BUFFER, sizeof(Primitives::Cube), Primitives::Cube, GL_STATIC_DRAW);
 
-        glBindBuffer(GL_ARRAY_BUFFER, VBO);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(Primitives::Cube), Primitives::Cube, GL_STATIC_DRAW);
+            glBindVertexArray(VAOgettingstarted);
 
-        //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-        //glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+            // position attribute
+            glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+            glEnableVertexAttribArray(0);
+            // texture coord attribute
+            glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+            glEnableVertexAttribArray(1);
 
-        // position attribute
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
-        glEnableVertexAttribArray(0);
-        // texture coord attribute
-        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
-        glEnableVertexAttribArray(1);
+            texture1gettingstarted = CreateTexture("container.jpg");
+            texture2gettingstarted = CreateTexture("awesomeface.png");
 
-        texture1 = CreateTexture("container.jpg");
-        texture2 = CreateTexture("awesomeface.png");
+            // tell opengl for each sampler to which texture unit it belongs to (only has to be done once)
+            Shaders::OpenGLGettingStartedShader.use();
+            Shaders::OpenGLGettingStartedShader.setInt("texture1", 0);
+            Shaders::OpenGLGettingStartedShader.setInt("texture2", 1);
+        }
+        // Scene 1 = LearnOpenGLLighting
+        else if (sceneID == 1) {
+            // -----CUBE
+            // Configure the cube's VAO (and VBO)
+            glGenVertexArrays(1, &cubeVAOlighting);
+            glGenBuffers(1, &VBOlighting);
 
-        // tell opengl for each sampler to which texture unit it belongs to (only has to be done once)
-        Shaders::MainShader.use();
-        Shaders::MainShader.setInt("texture1", 0);
-        Shaders::MainShader.setInt("texture2", 1);
+            glBindBuffer(GL_ARRAY_BUFFER, VBOlighting);
+            glBufferData(GL_ARRAY_BUFFER, sizeof(Primitives::Cube), Primitives::Cube, GL_STATIC_DRAW);
+
+            glBindVertexArray(cubeVAOlighting);
+
+            // position attribute
+            glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+            glEnableVertexAttribArray(0);
+            // -----
+
+            // -----CUBE LIGHT SOURCE
+            // Configure the light's VAO (VBO stays the same; the vertices are the same for the light object which is also a 3D cube)
+            glGenVertexArrays(1, &lightVAOlighting);
+            glBindVertexArray(lightVAOlighting);
+
+            // we only need to bind to the VBO (to link it with glVertexAttribPointer), no need to fill it; the VBO's data already contains all we need (it's already bound, but we do it again for educational purposes)
+            glBindBuffer(GL_ARRAY_BUFFER, VBOlighting);
+
+            // position attribute
+            glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+            glEnableVertexAttribArray(0);
+            // -----
+
+            // Asign object colour and light colour
+            Shaders::OpenGLLightingCubeShader.use();
+            Shaders::OpenGLLightingCubeShader.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
+            Shaders::OpenGLLightingCubeShader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
+        }
 	}
 
-    void Renderer::Deallocate()
+    void Renderer::Deallocate(unsigned int sceneID)
     {
-        // De-allocate all resources once they've outlived their purpose:
-        glDeleteVertexArrays(1, &VAO);
-        glDeleteBuffers(1, &VBO);
-        glDeleteBuffers(1, &EBO);
+        // De-allocate all resources once they've outlived their purpose
+        // Scene 0 = LearnOpenGLGettingStarted
+        if (sceneID == 0)
+        {
+            glDeleteVertexArrays(1, &VAOgettingstarted);
+            glDeleteBuffers(1, &VBOgettingstarted);
+        }
+        // Scene 1 = LearnOpenGLLighting
+        else if (sceneID == 1) {
+            glDeleteVertexArrays(1, &cubeVAOlighting);
+            glDeleteVertexArrays(1, &lightVAOlighting);
+            glDeleteBuffers(1, &VBOlighting);
+        }
     }
 
     unsigned int Renderer::CreateTexture(const char* fileLocation)

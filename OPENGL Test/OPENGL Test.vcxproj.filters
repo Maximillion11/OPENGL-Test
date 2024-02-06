@@ -81,10 +81,22 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Shaders\Shader.fs">
+    <None Include="Shaders\OpenGLGettingStartedShader.fs">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="Shaders\Shader.vs">
+    <None Include="Shaders\OpenGLGettingStartedShader.vs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\OpenGLLightingLightSourceShader.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\OpenGLLightingLightSourceShader.vs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\OpenGLLightingCubeShader.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\OpenGLLightingCubeShader.vs">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>

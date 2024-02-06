@@ -5,12 +5,14 @@
 #include "Utils.h"
 #include "Input.h"
 
+#include <string>
+
 namespace GL
 {
-    Camera camera(glm::vec3(0.0f));
+    Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
     GLFWwindow* window;
 
-	void GL::Init()
+	void GL::Init(unsigned int activeScene)
 	{
         // glfw: initialize and configure
         glfwInit();
@@ -32,8 +34,11 @@ namespace GL
         // Set the visibility window hint to false for subsequent window creation
         glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
 
+        // Use bodged activeScene to set window name
+        std::string windowTitle = "Active Scene: " + std::to_string(activeScene);
+
         // glfw window creation
-        window = glfwCreateWindow(Utils::WINDOW_WIDTH, Utils::WINDOW_HEIGHT, "OpenGL Test", NULL, NULL);
+        window = glfwCreateWindow(Utils::WINDOW_WIDTH, Utils::WINDOW_HEIGHT, windowTitle.c_str(), NULL, NULL);
         if (window == NULL)
         {
             std::cout << "Failed to create GLFW window" << std::endl;
@@ -50,6 +55,8 @@ namespace GL
         glfwShowWindow(window);
 
         glfwMakeContextCurrent(window);
+
+        // tell GLFW to capture our mouse
         glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
         glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);

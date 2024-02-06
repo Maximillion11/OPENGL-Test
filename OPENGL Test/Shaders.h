@@ -4,10 +4,14 @@
 #include "Shader.h"
 
 namespace Shaders {
-	extern Shader MainShader;
-	extern Shader OtherShader;
+	// Scene 0 = LearnOpenGLGettingStarted
+	extern Shader OpenGLGettingStartedShader;
 
-	extern void AssignShaders();
+	// Scene 1 = LearnOpenGLLighting
+	extern Shader OpenGLLightingCubeShader;
+	extern Shader OpenGLLightingLightShader;
+
+	extern void AssignShaders(unsigned int activeScene = 0);
 }
 
 #endif

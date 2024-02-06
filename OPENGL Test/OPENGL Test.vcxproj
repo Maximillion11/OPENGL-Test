@@ -168,8 +168,12 @@
     <Image Include="container.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Shaders\Shader.fs" />
-    <None Include="Shaders\Shader.vs" />
+    <None Include="Shaders\OpenGLGettingStartedShader.fs" />
+    <None Include="Shaders\OpenGLGettingStartedShader.vs" />
+    <None Include="Shaders\OpenGLLightingCubeShader.fs" />
+    <None Include="Shaders\OpenGLLightingCubeShader.vs" />
+    <None Include="Shaders\OpenGLLightingLightSourceShader.fs" />
+    <None Include="Shaders\OpenGLLightingLightSourceShader.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

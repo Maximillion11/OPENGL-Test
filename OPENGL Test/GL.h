@@ -15,7 +15,7 @@ namespace GL
 	extern void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 	extern void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 
-	extern void Init();
+	extern void Init(unsigned int activeScene = 0);
 }
 
 #endif

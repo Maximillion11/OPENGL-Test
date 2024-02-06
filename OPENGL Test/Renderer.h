@@ -3,12 +3,17 @@
 
 namespace Renderer
 {
-	extern unsigned int VBO, VAO, EBO;
-	extern unsigned int texture1, texture2;
+	// Scene 0 = LearnOpenGLGettingStarted
+	extern unsigned int VBOgettingstarted, VAOgettingstarted;
+	extern unsigned int texture1gettingstarted, texture2gettingstarted;
 
-	extern void Init();
+	// Scene 1 = LearnOpenGLLighting
+	extern unsigned int VBOlighting, cubeVAOlighting;
+	extern unsigned int lightVAOlighting;
+
+	extern void Init(unsigned int sceneID = 0);
 	
-	extern void Deallocate();
+	extern void Deallocate(unsigned int sceneID = 0);
 
 	extern unsigned int CreateTexture(const char* fileLocation);
 }
