@@ -34,7 +34,7 @@ int main()
         Input::CheckKeys();
 
         // Set background colour
-        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         // Render active scene
@@ -106,11 +106,36 @@ int main()
             glDrawArrays(GL_TRIANGLES, 0, 36);
 
             // Assign values to Cubes shader
+            // Define active shader as the cube shader
             Shaders::OpenGLLightingCubeShader.use();
             Shaders::OpenGLLightingCubeShader.setVec3("viewPos", GL::camera.Position);
-            Shaders::OpenGLLightingCubeShader.setVec3("lightPos", lightPos);
-            Shaders::OpenGLLightingCubeShader.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
-            Shaders::OpenGLLightingCubeShader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
+
+            Shaders::OpenGLLightingCubeShader.setVec3("light.position", lightPos);
+
+            // Change light colour over time
+            glm::vec3 lightColour;
+            lightColour.x = sin(glfwGetTime() * 2.0f);
+            lightColour.y = sin(glfwGetTime() * 0.7f);
+            lightColour.z = sin(glfwGetTime() * 1.3f);
+
+            glm::vec3 diffuseColour = lightColour * glm::vec3(0.5f);
+            glm::vec3 ambientColour = diffuseColour * glm::vec3(0.2f);
+
+            // Define how much the light affects these values in Cube shader
+            Shaders::OpenGLLightingCubeShader.setVec3("light.ambient", ambientColour);
+            Shaders::OpenGLLightingCubeShader.setVec3("light.diffuse", diffuseColour);
+            Shaders::OpenGLLightingCubeShader.setVec3("light.specular", 1.0f, 1.0f, 1.0f);
+
+            // Define the Cube values in shader
+            Shaders::OpenGLLightingCubeShader.setVec3("material.ambient", 1.0f, 0.5f, 0.31f);
+            Shaders::OpenGLLightingCubeShader.setVec3("material.diffuse", 1.0f, 0.5f, 0.31f);
+            Shaders::OpenGLLightingCubeShader.setVec3("material.specular", 0.5f, 0.5f, 0.5f);
+            Shaders::OpenGLLightingCubeShader.setFloat("material.shininess", 32.0f);
+
+            // Define active shader as the Light shader
+            Shaders::OpenGLLightingLightShader.use();
+            // Set the FragColor of our light to match the light it is outputting
+            Shaders::OpenGLLightingLightShader.setVec3("lightColour", lightColour);
 
             // Define active shader as the cube shader
             Shaders::OpenGLLightingCubeShader.use();
