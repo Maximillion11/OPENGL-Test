@@ -112,24 +112,29 @@ int main()
 
             Shaders::OpenGLLightingCubeShader.setVec3("light.position", lightPos);
 
-            // Change light colour over time
-            glm::vec3 lightColour;
-            lightColour.x = sin(glfwGetTime() * 2.0f);
-            lightColour.y = sin(glfwGetTime() * 0.7f);
-            lightColour.z = sin(glfwGetTime() * 1.3f);
+            // Define light colour
+            glm::vec3 lightColour = glm::vec3(1.0f, 1.0f, 1.0f);
+            glm::vec3 lightIntensity = glm::vec3(0.5f);
+            glm::vec3 ambientIntensity = glm::vec3(0.2f);
 
-            glm::vec3 diffuseColour = lightColour * glm::vec3(0.5f);
-            glm::vec3 ambientColour = diffuseColour * glm::vec3(0.2f);
+            glm::vec3 diffuseColour = lightColour * lightIntensity;
+            glm::vec3 ambientColour = diffuseColour * ambientIntensity;
 
             // Define how much the light affects these values in Cube shader
             Shaders::OpenGLLightingCubeShader.setVec3("light.ambient", ambientColour);
             Shaders::OpenGLLightingCubeShader.setVec3("light.diffuse", diffuseColour);
             Shaders::OpenGLLightingCubeShader.setVec3("light.specular", 1.0f, 1.0f, 1.0f);
 
+            // bind textures on corresponding texture units
+            glActiveTexture(GL_TEXTURE0);
+            glBindTexture(GL_TEXTURE_2D, Renderer::texture1lighting);
+            glActiveTexture(GL_TEXTURE1);
+            glBindTexture(GL_TEXTURE_2D, Renderer::texture2lighting);
+
             // Define the Cube values in shader
-            Shaders::OpenGLLightingCubeShader.setVec3("material.ambient", 1.0f, 0.5f, 0.31f);
-            Shaders::OpenGLLightingCubeShader.setVec3("material.diffuse", 1.0f, 0.5f, 0.31f);
-            Shaders::OpenGLLightingCubeShader.setVec3("material.specular", 0.5f, 0.5f, 0.5f);
+            // Assign texture unit 0 to diffuse
+            Shaders::OpenGLLightingCubeShader.setInt("material.diffuse", 0);
+            Shaders::OpenGLLightingCubeShader.setInt("material.specular", 1);
             Shaders::OpenGLLightingCubeShader.setFloat("material.shininess", 32.0f);
 
             // Define active shader as the Light shader

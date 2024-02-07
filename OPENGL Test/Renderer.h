@@ -10,6 +10,7 @@ namespace Renderer
 	// Scene 1 = LearnOpenGLLighting
 	extern unsigned int VBOlighting, cubeVAOlighting;
 	extern unsigned int lightVAOlighting;
+	extern unsigned int texture1lighting, texture2lighting;
 
 	extern void Init(unsigned int sceneID = 0);
 	

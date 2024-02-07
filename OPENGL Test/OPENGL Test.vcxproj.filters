@@ -73,14 +73,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="container.jpg">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="awesomeface.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Shaders\OpenGLGettingStartedShader.fs">
       <Filter>Shaders</Filter>
     </None>
@@ -99,5 +91,19 @@
     <None Include="Shaders\OpenGLLightingCubeShader.vs">
       <Filter>Shaders</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Images\awesomeface.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Images\container.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Images\container2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Images\container2_specular.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

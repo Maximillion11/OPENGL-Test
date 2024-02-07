@@ -164,16 +164,18 @@
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="awesomeface.png" />
-    <Image Include="container.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Shaders\OpenGLGettingStartedShader.fs" />
     <None Include="Shaders\OpenGLGettingStartedShader.vs" />
     <None Include="Shaders\OpenGLLightingCubeShader.fs" />
     <None Include="Shaders\OpenGLLightingCubeShader.vs" />
     <None Include="Shaders\OpenGLLightingLightSourceShader.fs" />
     <None Include="Shaders\OpenGLLightingLightSourceShader.vs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Images\awesomeface.png" />
+    <Image Include="Images\container.jpg" />
+    <Image Include="Images\container2.png" />
+    <Image Include="Images\container2_specular.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

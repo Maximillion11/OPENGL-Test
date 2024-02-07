@@ -20,6 +20,7 @@ namespace Renderer
     // Scene 1 = LearnOpenGLLighting
     unsigned int VBOlighting, cubeVAOlighting;
     unsigned int lightVAOlighting;
+    unsigned int texture1lighting, texture2lighting;
 
 	void Renderer::Init(unsigned int sceneID) {
         // glad: load all OpenGL function pointers
@@ -49,12 +50,15 @@ namespace Renderer
             // position attribute
             glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
             glEnableVertexAttribArray(0);
+            // normal attribute NOT USED
+            //glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+            //glEnableVertexAttribArray(1);
             // texture coord attribute
-            glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+            glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
             glEnableVertexAttribArray(1);
 
-            texture1gettingstarted = CreateTexture("container.jpg");
-            texture2gettingstarted = CreateTexture("awesomeface.png");
+            texture1gettingstarted = CreateTexture("Images/container.jpg");
+            texture2gettingstarted = CreateTexture("Images/awesomeface.png");
 
             // tell opengl for each sampler to which texture unit it belongs to (only has to be done once)
             Shaders::OpenGLGettingStartedShader.use();
@@ -76,11 +80,11 @@ namespace Renderer
             // position attribute
             glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
             glEnableVertexAttribArray(0);
-            // texture coord attribute (not used but assign anyway to help this make sense of how the primitives values are added to the shader)
-            glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-            glEnableVertexAttribArray(1);
             // normals attribute
-            glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(5 * sizeof(float)));
+            glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+            glEnableVertexAttribArray(1);
+            // texture coord attribute
+            glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
             glEnableVertexAttribArray(2);
             // -----
 
@@ -96,6 +100,9 @@ namespace Renderer
             glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
             glEnableVertexAttribArray(0);
             // -----
+
+            texture1lighting = CreateTexture("Images/container2.png");
+            texture2lighting = CreateTexture("Images/container2_specular.png");
         }
 	}
 
