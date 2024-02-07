@@ -46,12 +46,12 @@ int main()
         // Check input
         Input::CheckKeys();
 
-        // Set background colour
-        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
         // Render active scene
         if (activeScene == LearnOpenGLGettingStarted) {
+            // Set background colour
+            glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
             // bind textures on corresponding texture units
             glActiveTexture(GL_TEXTURE0);
             glBindTexture(GL_TEXTURE_2D, Renderer::texture1gettingstarted);
@@ -101,9 +101,16 @@ int main()
             Shaders::OpenGLLightingCubeShader.setVec3("viewPos", GL::camera.Position);
 
             //--- Directional Light
+            // Define Point Light colour
+            glm::vec3 dirLightColour = glm::vec3(1.0f, 1.0f, 1.0f);
+            glm::vec3 dirLightIntensity = glm::vec3(0.4f);
+            glm::vec3 dirAmbientIntensity = glm::vec3(0.05f);
+            glm::vec3 dirDiffuseColour = dirLightColour * dirLightIntensity;
+            glm::vec3 dirAmbientColour = dirDiffuseColour * dirAmbientIntensity;
+
             Shaders::OpenGLLightingCubeShader.setVec3("dirLight.direction", -0.2f, -1.0f, -0.3f);
-            Shaders::OpenGLLightingCubeShader.setVec3("dirLight.ambient", 0.05f, 0.05f, 0.05f);
-            Shaders::OpenGLLightingCubeShader.setVec3("dirLight.diffuse", 0.4f, 0.4f, 0.4f);
+            Shaders::OpenGLLightingCubeShader.setVec3("dirLight.ambient", dirAmbientColour);
+            Shaders::OpenGLLightingCubeShader.setVec3("dirLight.diffuse", dirDiffuseColour);
             Shaders::OpenGLLightingCubeShader.setVec3("dirLight.specular", 0.5f, 0.5f, 0.5f);
             // Directional Light is global and has no drop off distance, like the sun
 
@@ -165,6 +172,10 @@ int main()
             //Radius of spotlight
             Shaders::OpenGLLightingCubeShader.setFloat("spotLight.cutOff", glm::cos(glm::radians(12.5f)));
             Shaders::OpenGLLightingCubeShader.setFloat("spotLight.outerCutOff", glm::cos(glm::radians(15.0f)));
+
+            // Set background colour
+            glClearColor(dirDiffuseColour.r, dirDiffuseColour.g, dirDiffuseColour.b, 1.0f);
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
             // bind textures on corresponding texture units
             glActiveTexture(GL_TEXTURE0);
